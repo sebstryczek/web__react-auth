@@ -3,8 +3,10 @@ import Home from './pages/home/Home';
 import Things from './pages/things/Things';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import useAuth from './auth/useAuth';
 
 const App: React.FC = () => {
+  const {} = useAuth;
   return (
     <div className="App">
       <h1>
