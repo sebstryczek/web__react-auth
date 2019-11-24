@@ -1,5 +1,7 @@
 import * as firebase from 'firebase';
 import config from '../config';
+import { AuthProviderActions } from './AuthProvider';
+import { User } from './User';
 // class Firebase {
 //     auth: any
 //     constructor() {
@@ -23,13 +25,26 @@ import config from '../config';
 //     doPasswordUpdate = (password: string) => this.auth.currentUser ? this.auth.currentUser.updatePassword(password) : null;
 //   }
 
-export default () => {
+const createAuthFirebase = () : AuthProviderActions => {
   const app = firebase.initializeApp(config.firebase);
   const auth = app.auth();
-
   return {
-    login: (email: string, password: string) => auth.signInWithEmailAndPassword(email, password),
+    login: async (email: string, password: string) : Promise<User> => {
+      const { user } = await auth.signInWithEmailAndPassword(email, password);
+      if (!user) {
+        throw Error('No user data returned');
+      }
+      if (!user.email) {
+        throw Error('No user email returned');
+      }
+      return {
+        id: user.uid,
+        email:  user.email,
+      }
+    },
     logout: () => { },
     register: () => { },
-  }
-}
+  };
+};
+
+export default createAuthFirebase;

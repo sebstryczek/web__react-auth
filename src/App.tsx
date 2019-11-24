@@ -1,8 +1,8 @@
-import React, { useState, MouseEventHandler } from 'react';
+import React from 'react';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
-import { AuthProvider, AuthConsumer } from './auth/Auth';
+import AuthProvider from './auth/AuthProvider';
 import createAuthFirebase from './auth/createAuthFirebase';
 import MainNavigation from './navigations/MainNavigation';
 import MainNavigationRouting from './navigations/MainNavigationRouting';
@@ -12,7 +12,7 @@ export interface IAppProps {
 const auth = createAuthFirebase();
 const browserHistory = createBrowserHistory();
 
-const App: React.FC<IAppProps> = (props: any) => {
+const App: React.FC<IAppProps> = () => {
   return (
     <Router history={browserHistory}>
       <AuthProvider auth={auth}>
