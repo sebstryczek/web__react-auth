@@ -6,12 +6,10 @@ export interface Action {
   payload: any;
 }
 
-export type Dispatch = React.Dispatch<Action>;
-
 // https://stackoverflow.com/questions/54577865/react-createcontext-issue-in-typescript
 type StateContextProps = {
   state: State;
-  dispatch: Dispatch;
+  dispatch: React.Dispatch<Action>;
 }
 export const StateContext = createContext({} as StateContextProps);
 
