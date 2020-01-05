@@ -4,7 +4,7 @@ import { User } from './User';
 
 export type AuthProviderActions = {
   login: (email: string, password: string) => Promise<User>,
-  logout: Function,
+  logout: () => void,
   register: Function,
 };
 
@@ -48,11 +48,23 @@ class AuthProvider extends React.Component<AuthProviderProps> {
     this.login(email, password);
   }
 
+  logout = async () => {
+    try {
+      await this.props.auth.logout;
+      this.setState({ isAuthenticated: false, isBusy: false, user: null });
+      localStorage.removeItem('currentUser');
+      return null;
+    } catch (error) {
+      console.log(error.code, error.message);
+      this.setState({ isAuthenticated: false, isBusy: false, hasError: true, errorMessage: error.message });
+    }
+  }
+
   get actions() {
     return {
       login: this.login,
       loginSubmit: this.loginSubmit,
-      logout: () => {console.log('logout')},
+      logout: this.logout,
       register: () => {console.log('register')},
     }
   }

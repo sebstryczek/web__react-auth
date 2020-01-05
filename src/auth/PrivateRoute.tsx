@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 const PrivateRoute = ({ children, isAuthenticated, redirectPath, ...rest }: any) => {
   return (

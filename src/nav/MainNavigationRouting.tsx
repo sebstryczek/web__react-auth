@@ -7,12 +7,14 @@ import Register from '../pages/register/Register';
 import AuthConsumer from '../auth/AuthConsumer';
 import PrivateRoute from '../auth/PrivateRoute';
 import ForeignerRoute from '../auth/ForeignerRoute';
+import { authContextPropsType } from '../auth/AuthContext';
+import Logout from '../pages/logout/Logout';
 
 const MainNavigationRouting = () => (
   <Switch>
     <AuthConsumer>
       {
-        ({ isAuthenticated, currentUser, actions }: any) => (
+        ({ isAuthenticated, currentUser, actions }: authContextPropsType) => (
           <>
             <ForeignerRoute path='/login' redirectPath='/' isAuthenticated={isAuthenticated}>
               <Login />
@@ -24,6 +26,10 @@ const MainNavigationRouting = () => (
             
             <PrivateRoute path='/things' redirectPath='/login' isAuthenticated={isAuthenticated}>
               <Things />
+            </PrivateRoute>
+            
+            <PrivateRoute path='/logout' redirectPath='/login' isAuthenticated={isAuthenticated}>
+              <Logout />
             </PrivateRoute>
           </>
         )}

@@ -42,7 +42,9 @@ const createAuthFirebase = () : AuthProviderActions => {
         email:  user.email,
       }
     },
-    logout: () => { },
+    logout: async () => {
+      await auth.signOut();
+    },
     register: () => { },
   };
 };

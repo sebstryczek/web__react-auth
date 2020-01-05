@@ -1,7 +1,7 @@
 import React, { FormEventHandler } from 'react';
 import { User } from './User';
 
-type authContextPropsType = {
+export type authContextPropsType = {
   isAuthenticated: Boolean,
   currentUser: User | null,
   actions: {
