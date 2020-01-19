@@ -2,23 +2,9 @@ import * as firebase from 'firebase';
 import config from '../config';
 import { AuthProviderActions } from './AuthProvider';
 import { User } from './User';
-// class Firebase {
-//     auth: any
-//     constructor() {
-//       const app = ;
-//       this.auth = firebase.app().auth();
-//       console.log(this.auth)
-//       if (firebase.apps.length) {
-//       }
-//     }
 
 //     doCreateUserWithEmailAndPassword = (email: string, password: string) =>
 //       this.auth.createUserWithEmailAndPassword(email, password);
-
-//     login = (email: string, password: string) =>
-//       this.auth.signInWithEmailAndPassword(email, password);
-
-//     doSignOut = () => this.auth.signOut();
 
 //     doPasswordReset = (email: string) => this.auth.sendPasswordResetEmail(email);
 

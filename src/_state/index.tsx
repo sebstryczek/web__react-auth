@@ -14,13 +14,20 @@ type StateContextProps = {
 export const StateContext = createContext({} as StateContextProps);
 
 type StateProviderProps = {
-  reducer: React.Reducer<State, Action>;
-  initialState: State;
+  reducer: React.Reducer<State, Action>,
+  initialState: State,
+  sideEffects: Function,
 }
-export const StateProvider: React.FC<StateProviderProps> = ({ reducer, initialState, children }) => {
+export const StateProvider: React.FC<StateProviderProps> = ({ reducer, initialState, sideEffects, children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const value = {state, dispatch};
+  const value = {
+    state,
+    dispatch: sideEffects(dispatch)
+  };
+  
   return (
+    // https://gist.github.com/astoilkov/013c513e33fe95fa8846348038d8fe42
+    // <StateContext.Provider value={dispatchMiddleware(state, dispatch)??}>
     <StateContext.Provider value={value}>
       {children}
     </StateContext.Provider>

@@ -17,7 +17,7 @@ const MainNavigationRouting = () => (
         ({ isAuthenticated, currentUser, actions }: authContextPropsType) => (
           <>
             <ForeignerRoute path='/login' redirectPath='/' isAuthenticated={isAuthenticated}>
-              <Login />
+              <Login login={(email, password) => console.log('!!!', email, password)} />
             </ForeignerRoute>
 
             <ForeignerRoute path='/register' redirectPath='/' isAuthenticated={isAuthenticated}>

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { useStateValue, Action, StateContext } from './';
 
 export type _ExampleState = {
@@ -13,7 +14,30 @@ export const _exampleInitialState : _ExampleState = {
 
 export const CHANGE_THEME = '@_EXAMPLE/CHANGE_THEME';
 
+export const _exampleSideEffects = async (action: any) => {
+  switch (action.type) {
+    case CHANGE_THEME:
+      try {
+        const result = await axios.get('https://reqres.in/api/users?delay=2');
+        console.log(result)
+        return {
+          ...action,
+          payload: {
+            ...action.payload,
+            data: result.data,
+          }
+        }
+      } catch (error) {
+        console.log(error)
+      }
+      return action;
+    default:
+      return action;
+  }
+}
+
 export const _exampleReducer = (state: _ExampleState, action: Action) => {
+  console.log(action);
   switch (action.type) {
     case CHANGE_THEME: {
       const { payload } = action;
