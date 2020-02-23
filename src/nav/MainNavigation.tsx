@@ -12,9 +12,10 @@ import Logout from '../pages/logout/Logout';
 import Register from '../pages/register/Register';
 
 const MainNavigation = ({authActions} : any) => {
-  const { state, dispatch } = useStateValue();
-  const { auth } = state;
-  const { isAuthenticated } = auth;
+  // const { state, dispatch } = useStateValue();
+  // const { auth } = state;
+  // const { isAuthenticated } = auth;
+  const isAuthenticated = false;
   return (
     <>
       <nav>
