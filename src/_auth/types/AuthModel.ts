@@ -1,9 +1,11 @@
-import AuthService from "./AuthService";
-import User from "./User";
+import AuthService from './AuthService';
+import User from './User';
 
 type AuthModel = {
-  isAuthenticated: Boolean,
-  currentUser: User | null,
+  state: {
+    isAuthenticated: Boolean,
+    currentUser: User | null,
+  },
   actions: AuthService
 }
 

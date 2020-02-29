@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 
-import { useStateValue } from '../_state';
+// import { useStateValue } from '../_state';
 import PrivateRoute from '../auth/PrivateRoute';
 import ForeignerRoute from '../auth/ForeignerRoute';
 import Home from '../pages/home/Home';
