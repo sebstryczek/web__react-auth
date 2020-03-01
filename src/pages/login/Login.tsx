@@ -1,56 +1,45 @@
 import React, { FormEvent } from 'react';
-import AuthConsumer from '../../auth/AuthConsumer';
 
-export interface ILoginProps {
-  login: (email: string, password: string) => void,
-}
+import { Page } from '..';
+import _useHistory from '../../_auth/hooks/useHistory';
+import _useAuth from '../../_auth/hooks/useAuth';
 
-class Login extends React.Component<ILoginProps> {
-  submit = (event: FormEvent<HTMLFormElement>) => {
+const Login = ({
+  useHistory = _useHistory,
+  useAuth = _useAuth,
+}: Page) => {
+  const history = useHistory();
+  const redirectPath = history.location.state.source.pathname;
+
+  const auth = useAuth();
+  const { isAuthenticated } = auth.state;
+  const { login } = auth.actions;
+
+  const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { target } : any = event;
+    const { target }: any = event;
     const email = target.email.value
     const password = target.password.value
-    const { login } = this.props;
     login(email, password);
   }
 
-  render() {
-    return (
-      <div>
-        <h2>
-          Login
-        </h2>
-        <form onSubmit={this.submit}>
-          <input type='text' name='email' placeholder='email' />
-          <input type='text' name='password' placeholder='password' />
-          <button type='submit'>LOGIN</button>
-        </form>
-      </div>
-    );
+  if (isAuthenticated) {
+    history.push(redirectPath);
   }
-}
 
+  return (
+    <div>
+      <h2>
+        Login
+      </h2>
 
-// const Login: React.FC = (props: ILoginProps) => {
-//   return (
-//     <div className="">
-//       <h2>
-//         Login
-//       </h2>
-//       <AuthConsumer>
-//         {({ isAuthenticated, currentUser, actions }) => {
-//           return (
-//             <form onSubmit={actions.loginSubmit}>
-//               <input type='text' name='email' placeholder='email' />
-//               <input type='text' name='password' placeholder='password' />
-//               <button type='submit'>LOGIN</button>
-//             </form>
-//           );
-//         }}
-//       </AuthConsumer>
-//     </div>
-//   );
-// }
+      <form onSubmit={submit}>
+        <input type='text' name='email' placeholder='email' />
+        <input type='text' name='password' placeholder='password' />
+        <button type='submit'>LOGIN</button>
+      </form>
+    </div>
+  );
+};
 
 export default Login;

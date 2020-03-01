@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../index';
+import useAuth from '../hooks/useAuth';
 
 const AuthActionsDebugger = () => {
   const auth = useAuth();

@@ -3,7 +3,7 @@ import User from './User';
 
 type AuthModel = {
   state: {
-    isAuthenticated: Boolean,
+    isAuthenticated: boolean,
     currentUser: User | null,
   },
   actions: AuthService

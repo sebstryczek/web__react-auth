@@ -1,43 +1,53 @@
-import React, { FormEventHandler, useContext } from 'react';
+import React from 'react';
 import User from './types/User';
 import AuthModel from './types/AuthModel';
 import AuthService from './types/AuthService';
+
 const defaultValue: AuthModel = {
   state: {
     isAuthenticated: false,
     currentUser: null,
   },
   actions: {
-    login: (username, password) => ({ email: '', id: '-1', }),
-    logout: () => true,
+    login: (username, password) => new Promise(() => ({ email: '', id: '-1', })),
+    logout: () => new Promise(() => true),
     register: (username, password) => true,
   }
 }
 
-const AuthContext = React.createContext(defaultValue);
-const AuthConsumer = AuthContext.Consumer;
+export const AuthContext = React.createContext(defaultValue);
 
-export const useAuth = () => useContext(AuthContext);
+// const AuthConsumer = AuthContext.Consumer;
 
 type AuthProviderProps = {
   authService: AuthService,
 };
 
+type AuthProviderState = {
+  isAuthenticated: boolean,
+  currentUser: User,
+};
 // const AuthProvider = AuthContext.Provider;
 export class AuthProvider extends React.Component<AuthProviderProps> {
   state = {
     isAuthenticated: false,
     currentUser: null,
-    isBusy: false,
-    hasError: false,
-    errorMessage: '',
+    // isBusy: false,
+    // hasError: false,
+    // errorMessage: '',
   }
 
   componentDidMount() {
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      const isAuthenticated = true;
+      const currentUser: User = JSON.parse(user);
+      this.setState({ isAuthenticated, currentUser });
+    }
   }
 
-  login = (email: string, password: string) => {
-    const user = this.props.authService.login(email, password);
+  login = async (email: string, password: string) => {
+    const user: User = await this.props.authService.login(email, password);
     this.setState({
       isAuthenticated: true,
       currentUser: user,
@@ -45,8 +55,9 @@ export class AuthProvider extends React.Component<AuthProviderProps> {
     return user;
   }
 
-  logout = () => {
-    const isLogoutSucceed = this.props.authService.logout();
+  logout = async () => {
+    const isLogoutSucceed = await this.props.authService.logout();
+    localStorage.removeItem('currentUser');
     this.setState({
       isAuthenticated: false,
       currentUser: null,

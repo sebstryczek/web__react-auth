@@ -2,16 +2,17 @@ import AuthService from '../types/AuthService';
 import User from '../types/User';
 
 const dubugAuth: AuthService = {
-  login: (email: string, password: string): User => {
+  login: async (email: string, password: string): Promise<User> => {
     console.log('dubugAuth', 'login');
-    return {
+    const debugUser = {
       id: `id-${password}`,
       email: email,
     };
+    return new Promise(() => debugUser);
   },
-  logout: () => {
+  logout: async () => {
     console.log('dubugAuth', 'logout');
-    return true;
+    return new Promise(() => true);
   },
   register: () => {
     console.log('dubugAuth', 'register');
